@@ -1,0 +1,140 @@
+<meta charset="UTF-8">
+
+<script>
+    function pulaLinha() {
+        document.write("<br>");
+    }
+
+    function mostra(frase) {
+        document.write(frase);
+        pulaLinha();
+    }
+
+    function sorteia(){
+        return Math.round(Math.random() * 60);
+    }
+
+    //começo da geração de número da sorte
+
+    function sorteiaNumeros (quantidade){
+
+        var resultados = [];
+        var numero = 1;
+
+        while(numero <= quantidade){
+            var numeroSorte = sorteia();
+            var repetiu = false;
+
+            if(numeroSorte !== 0){
+                for (var posicao = 0; posicao < resultados.length; posicao++){
+                    if (resultados[posicao] == numeroSorte){
+                        repetiu = true;
+                        break;
+                    }
+                }
+                
+                
+                if (repetiu == false){
+                    resultados.push(numeroSorte);
+                    numero++;
+                }
+            }
+        }
+        return resultados;
+    } 
+
+    var resultado = sorteiaNumeros(6);
+
+    //números da sorte ok
+
+    
+
+    
+    //quantos numeros ele vai jogar
+    var numeroChance = parseInt(prompt("Você vai jogar quantos números?"));
+    while (numeroChance > 15 || numeroChance < 6)
+    {
+    var numeroChance = parseInt(prompt("Esse número não vale, burro! Só de 6 a 15. Você vai jogar quantos números?"));
+    }
+
+    //fim do tanto de numero que vai jogar. Deu certo
+
+
+//começando a computar os chutes sem repetição
+    var chute = [];
+
+    for(var numeroPalpite = 1; numeroPalpite <= numeroChance; numeroPalpite++){
+    	
+    			
+
+                var numeroChute = parseInt(prompt("Escolha seu " + numeroPalpite + "° palpite"));
+
+                while (isNaN(numeroChute)){
+                    numeroChute = parseInt(prompt("Você é analfabeto? São só números, porra! E de preferência de 1 a 60. Se colocar fora desse intervalo vai errar, foda-se. Mais uma chance até o bonitinho acertar, vai lá. " + numeroPalpite + "° palpite"))
+                }
+                
+
+                var repete = false;
+                for (var posicao = 0; posicao < chute.length; posicao++){
+                    if(chute[posicao] == numeroChute){
+                    repete = true;
+
+                    }
+                }
+
+                if (repete == false){
+                    chute.push(numeroChute);
+                }
+                else{
+                    numeroPalpite--;
+                    alert("Você já colocou esse, seu energúmeno");
+                    }   
+    }
+//já não deixa mais repetir, e os chutes são computados também, ok!
+
+
+//contando os acertos
+    var numeroAcertos = 0;
+    for(var pose = 0; pose < chute.length; pose++){
+
+        for(var lugar = 0; lugar < resultado.length; lugar++){
+            if(chute[pose] == resultado[lugar]){
+            numeroAcertos++;
+            break;  
+            }
+        }
+    }
+// deu certo
+
+
+
+
+    mostra("<br><br>Resultado da Mega Sena de Chernobyl <br> " + resultado);
+    mostra("Você chutou<br>" + chute);
+    document.write("<br><br> Você acertou " + numeroAcertos + " números");
+
+    if (numeroAcertos > 3){
+    	document.write("<br>Você ganhou dinheiro. CAGADO!");
+    }
+    else{
+        document.write("<br>Não ganhou nada. SE FODEU!");
+    }
+
+    var burrada = 0;
+    var numerosBurros = [];
+
+
+    for(var pos = 0; pos < chute.length; pos++){
+        if(chute[pos] > 60 || chute[pos] < 1){
+            burrada++;
+            numerosBurros.push(chute[pos]);
+        }
+    }
+
+    if(burrada > 0){
+        mostra("<br>Você ainda jogou " + burrada + " números que nem valem na mega sena (" + numerosBurros + ") BURRO DEMAIS")
+    }
+
+    
+    
+</script>
